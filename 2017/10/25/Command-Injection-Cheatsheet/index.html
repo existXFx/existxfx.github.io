@@ -5,17 +5,17 @@
   
   <title>命令注入备忘录 | Exist</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Linux&amp;amp;&amp;amp;先执行前面的，再执行后面的123echo 1 &amp;amp;&amp;amp; echo 2 12 &amp;amp;先执行后面的，再执行前面的123echo 1 &amp;amp; echo 221 ||只执行前面的12echo 1 || echo 21 |只执行后面的12echo 1 | echo 2 2 ;1echo 1;echo 2 `先执行反引号中的1echo `ls` $()同上">
+  <meta name="description" content="Linux&amp;amp;&amp;amp;123echo 1 &amp;amp;&amp;amp; echo 2 12 &amp;amp;123echo 1 &amp;amp; echo 221 # bg ||12echo 1 || echo 21 |12echo 1 | echo 2 2 ;1echo 1;echo 2 `1echo `ls` $()\n过滤关键字绕过 ls == l``s ls == l&amp;#39;&amp;#39;s ls =">
 <meta name="keywords" content="Pentest">
 <meta property="og:type" content="article">
 <meta property="og:title" content="命令注入备忘录">
 <meta property="og:url" content="https://existxfx.github.io/2017/10/25/Command-Injection-Cheatsheet/index.html">
 <meta property="og:site_name" content="Exist">
-<meta property="og:description" content="Linux&amp;amp;&amp;amp;先执行前面的，再执行后面的123echo 1 &amp;amp;&amp;amp; echo 2 12 &amp;amp;先执行后面的，再执行前面的123echo 1 &amp;amp; echo 221 ||只执行前面的12echo 1 || echo 21 |只执行后面的12echo 1 | echo 2 2 ;1echo 1;echo 2 `先执行反引号中的1echo `ls` $()同上">
-<meta property="og:updated_time" content="2017-10-25T17:00:21.000Z">
+<meta property="og:description" content="Linux&amp;amp;&amp;amp;123echo 1 &amp;amp;&amp;amp; echo 2 12 &amp;amp;123echo 1 &amp;amp; echo 221 # bg ||12echo 1 || echo 21 |12echo 1 | echo 2 2 ;1echo 1;echo 2 `1echo `ls` $()\n过滤关键字绕过 ls == l``s ls == l&amp;#39;&amp;#39;s ls =">
+<meta property="og:updated_time" content="2017-10-25T18:07:07.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="命令注入备忘录">
-<meta name="twitter:description" content="Linux&amp;amp;&amp;amp;先执行前面的，再执行后面的123echo 1 &amp;amp;&amp;amp; echo 2 12 &amp;amp;先执行后面的，再执行前面的123echo 1 &amp;amp; echo 221 ||只执行前面的12echo 1 || echo 21 |只执行后面的12echo 1 | echo 2 2 ;1echo 1;echo 2 `先执行反引号中的1echo `ls` $()同上">
+<meta name="twitter:description" content="Linux&amp;amp;&amp;amp;123echo 1 &amp;amp;&amp;amp; echo 2 12 &amp;amp;123echo 1 &amp;amp; echo 221 # bg ||12echo 1 || echo 21 |12echo 1 | echo 2 2 ;1echo 1;echo 2 `1echo `ls` $()\n过滤关键字绕过 ls == l``s ls == l&amp;#39;&amp;#39;s ls =">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -62,14 +62,13 @@
     <div class="article-entry typo" itemprop="articleBody">
       
         <!-- toc -->
-<h2 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h2><h4 id="amp-amp"><a href="#amp-amp" class="headerlink" title="&amp;&amp;"></a>&amp;&amp;</h4><p>先执行前面的，再执行后面的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">echo 1 &amp;&amp; echo 2 </div><div class="line">1</div><div class="line">2</div></pre></td></tr></table></figure></p>
-<h4 id="amp"><a href="#amp" class="headerlink" title="&amp;"></a>&amp;</h4><p>先执行后面的，再执行前面的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">echo 1 &amp; echo 2</div><div class="line">2</div><div class="line">1</div></pre></td></tr></table></figure></p>
-<h4 id=""><a href="#" class="headerlink" title="||"></a>||</h4><p>只执行前面的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">echo 1 || echo 2</div><div class="line">1</div></pre></td></tr></table></figure></p>
-<h4 id="-1"><a href="#-1" class="headerlink" title="|"></a>|</h4><p>只执行后面的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">echo 1 | echo 2 </div><div class="line">2</div></pre></td></tr></table></figure></p>
+<h2 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h2><h4 id="amp-amp"><a href="#amp-amp" class="headerlink" title="&amp;&amp;"></a>&amp;&amp;</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">echo 1 &amp;&amp; echo 2 </div><div class="line">1</div><div class="line">2</div></pre></td></tr></table></figure>
+<h4 id="amp"><a href="#amp" class="headerlink" title="&amp;"></a>&amp;</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">echo 1 &amp; echo 2</div><div class="line">2</div><div class="line">1 # bg</div></pre></td></tr></table></figure>
+<h4 id=""><a href="#" class="headerlink" title="||"></a>||</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">echo 1 || echo 2</div><div class="line">1</div></pre></td></tr></table></figure>
+<h4 id="-1"><a href="#-1" class="headerlink" title="|"></a>|</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">echo 1 | echo 2 </div><div class="line">2</div></pre></td></tr></table></figure>
 <h4 id="-2"><a href="#-2" class="headerlink" title=";"></a>;</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo 1;echo 2</div></pre></td></tr></table></figure>
-<h4 id="-3"><a href="#-3" class="headerlink" title="`"></a>`</h4><p>先执行反引号中的<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo `ls`</div></pre></td></tr></table></figure></p>
-<h4 id="-4"><a href="#-4" class="headerlink" title="$()"></a>$()</h4><p>同上</p>
-<h4 id="n"><a href="#n" class="headerlink" title="\n"></a>\n</h4><h3 id="过滤关键字"><a href="#过滤关键字" class="headerlink" title="过滤关键字"></a>过滤关键字</h3><h4 id="绕过"><a href="#绕过" class="headerlink" title="绕过"></a>绕过</h4><ul>
+<h4 id="-3"><a href="#-3" class="headerlink" title="`"></a>`</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">echo `ls`</div></pre></td></tr></table></figure>
+<h4 id="-4"><a href="#-4" class="headerlink" title="$()"></a>$()</h4><h4 id="n"><a href="#n" class="headerlink" title="\n"></a>\n</h4><h3 id="过滤关键字"><a href="#过滤关键字" class="headerlink" title="过滤关键字"></a>过滤关键字</h3><h4 id="绕过"><a href="#绕过" class="headerlink" title="绕过"></a>绕过</h4><ul>
 <li><code>ls == l``s</code></li>
 <li><code>ls == l&#39;&#39;s</code></li>
 <li><code>ls == l&quot;&quot;s</code></li>
