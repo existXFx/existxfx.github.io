@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   
-  <title>Pwn基础学习-泄露libc地址计算system()绕过ASLR | Exist</title>
+  <title>Pwn基础学习-泄露libc地址计算system()地址绕过ASLR | Exist</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="题目Jarvis OJ-Pwn-level3 解题思路拿到题目有两个文件：level3和libc-2.19.soIDA看一下level3：main函数vulnerable_function函数很明显的栈溢出，由于程序中并没有使用system函数，同时我们拿到了libc.so，可以考虑leak出write()的地址来计算system()和&amp;#39;/bin/sh&amp;#39;的地址。 具体流程泄露wri">
 <meta name="keywords" content="Pwn">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Pwn基础学习-泄露libc地址计算system()绕过ASLR">
+<meta property="og:title" content="Pwn基础学习-泄露libc地址计算system()地址绕过ASLR">
 <meta property="og:url" content="https://existxfx.github.io/2017/10/25/Basic-Pwn-0x01/index.html">
 <meta property="og:site_name" content="Exist">
 <meta property="og:description" content="题目Jarvis OJ-Pwn-level3 解题思路拿到题目有两个文件：level3和libc-2.19.soIDA看一下level3：main函数vulnerable_function函数很明显的栈溢出，由于程序中并没有使用system函数，同时我们拿到了libc.so，可以考虑leak出write()的地址来计算system()和&amp;#39;/bin/sh&amp;#39;的地址。 具体流程泄露wri">
@@ -16,9 +16,9 @@
 <meta property="og:image" content="https://existxfx.github.io/2017/10/25/Basic-Pwn-0x01/1508666997664.png">
 <meta property="og:image" content="https://existxfx.github.io/2017/10/25/Basic-Pwn-0x01/1508952373054.png">
 <meta property="og:image" content="https://existxfx.github.io/2017/10/25/Basic-Pwn-0x01/1508954079282.png">
-<meta property="og:updated_time" content="2017-10-25T17:58:26.000Z">
+<meta property="og:updated_time" content="2017-11-19T16:08:12.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Pwn基础学习-泄露libc地址计算system()绕过ASLR">
+<meta name="twitter:title" content="Pwn基础学习-泄露libc地址计算system()地址绕过ASLR">
 <meta name="twitter:description" content="题目Jarvis OJ-Pwn-level3 解题思路拿到题目有两个文件：level3和libc-2.19.soIDA看一下level3：main函数vulnerable_function函数很明显的栈溢出，由于程序中并没有使用system函数，同时我们拿到了libc.so，可以考虑leak出write()的地址来计算system()和&amp;#39;/bin/sh&amp;#39;的地址。 具体流程泄露wri">
 <meta name="twitter:image" content="https://existxfx.github.io/2017/10/25/Basic-Pwn-0x01/1508666955240.png">
   
@@ -58,7 +58,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Pwn基础学习-泄露libc地址计算system()绕过ASLR
+      Pwn基础学习-泄露libc地址计算system()地址绕过ASLR
     </h1>
   
 
